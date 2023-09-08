@@ -4,7 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
-	controllers "api-gin/controller"
+	controllers "api-gin/controllers"
+	"api-gin/middlewares"
 
 	swaggerFiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
@@ -17,18 +18,28 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	r.Use(func(c *gin.Context) {
 		c.Set("db", db)
 	})
+
+	r.POST("/register", controllers.Register)
+	r.POST("/login", controllers.Login)
+
 	r.GET("/movies", controllers.GetAllMovie)
-	r.POST("/movies", controllers.CreateMovie)
-	r.GET("/movies/:id", controllers.GetMovieById)
-	r.PATCH("/movies/:id", controllers.UpdateMovie)
-	r.DELETE("movies/:id", controllers.DeleteMovie)
+	r.GET("/:id", controllers.GetMovieById)
+
+	moviesMiddlewareRoute := r.Group("/movies")
+	moviesMiddlewareRoute.Use(middlewares.JwtAuthMiddleware())
+	moviesMiddlewareRoute.POST("/", controllers.CreateMovie)
+	moviesMiddlewareRoute.PATCH("/:id", controllers.UpdateMovie)
+	moviesMiddlewareRoute.DELETE("/:id", controllers.DeleteMovie)
 
 	r.GET("/age-rating-categories", controllers.GetAllRating)
-	r.POST("/age-rating-categories", controllers.CreateRating)
 	r.GET("/age-rating-categories/:id", controllers.GetRatingById)
 	r.GET("/age-rating-categories/:id/movies", controllers.GetMoviesByRatingId)
-	r.PATCH("/age-rating-categories/:id", controllers.UpdateRating)
-	r.DELETE("age-rating-categories/:id", controllers.DeleteRating)
+
+	ratingMiddlewareRoute := r.Group("/age-rating-categories")
+	ratingMiddlewareRoute.Use(middlewares.JwtAuthMiddleware())
+	ratingMiddlewareRoute.POST("/", controllers.CreateRating)
+	ratingMiddlewareRoute.PATCH("/:id", controllers.UpdateRating)
+	ratingMiddlewareRoute.DELETE("/:id", controllers.DeleteRating)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

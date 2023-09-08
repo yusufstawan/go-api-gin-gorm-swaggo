@@ -19,6 +19,8 @@ type ageRatingCategoryInput struct {
 // @Summary Get all AgeRatingCategory.
 // @Description Get a list of AgeRatingCategory.
 // @Tags AgeRatingCategory
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
 // @Produce json
 // @Success 200 {object} []models.AgeRatingCategory
 // @Router /age-rating-categories [get]
@@ -35,6 +37,8 @@ func GetAllRating(c *gin.Context) {
 // @Summary Create New AgeRatingCategory.
 // @Description Creating a new AgeRatingCategory.
 // @Tags AgeRatingCategory
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
 // @Param Body body ageRatingCategoryInput true "the body to create a new AgeRatingCategory"
 // @Produce json
 // @Success 200 {object} models.AgeRatingCategory
@@ -59,6 +63,8 @@ func CreateRating(c *gin.Context) {
 // @Summary Get AgeRatingCategory.
 // @Description Get an AgeRatingCategory by id.
 // @Tags AgeRatingCategory
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
 // @Produce json
 // @Param id path string true "AgeRatingCategory id"
 // @Success 200 {object} models.AgeRatingCategory
@@ -79,6 +85,8 @@ func GetRatingById(c *gin.Context) { // Get model if exist
 // @Summary Get Movies.
 // @Description Get all Movies by AgeRatingCategoryId.
 // @Tags AgeRatingCategory
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
 // @Produce json
 // @Param id path string true "AgeRatingCategory id"
 // @Success 200 {object} []models.Movie
@@ -100,6 +108,8 @@ func GetMoviesByRatingId(c *gin.Context) { // Get model if exist
 // @Summary Update AgeRatingCategory.
 // @Description Update AgeRatingCategory by id.
 // @Tags AgeRatingCategory
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
 // @Produce json
 // @Param id path string true "AgeRatingCategory id"
 // @Param Body body ageRatingCategoryInput true "the body to update age rating category"
@@ -136,6 +146,8 @@ func UpdateRating(c *gin.Context) {
 // @Summary Delete one AgeRatingCategory.
 // @Description Delete a AgeRatingCategory by id.
 // @Tags AgeRatingCategory
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
 // @Produce json
 // @Param id path string true "AgeRatingCategory id"
 // @Success 200 {object} map[string]boolean
